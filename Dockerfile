@@ -1,5 +1,7 @@
 FROM ubuntu:22.04 as build
 
+RUN useradd -u 5000 app
+
 RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install software-properties-common -y \
@@ -20,4 +22,7 @@ RUN pip install -r requirements.txt
 COPY app /app
 
 EXPOSE 5000
+
+USER app:app
+
 ENTRYPOINT [ "python3", "app.py" ]
