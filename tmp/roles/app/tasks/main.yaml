@@ -1,0 +1,32 @@
+- name: Block
+  block:
+    - name: Create code directory
+      file:
+        dest: "{{ code_directory }}"
+        state: directory
+
+    - name: Get latest application code from GitHub
+      git:
+        repo: git@github.com:{{ repo_name }}
+        version: "{{ branch_name}}"
+        dest: "{{ code_directory }}"
+      notify: 
+        - curl-webserver
+        
+    - name: Install Python libraries
+      pip:
+        chdir: "{{ code_directory }}"
+        requirements: "requirements.txt"
+        state: present 
+        virtualenv_command: "pyenv"
+
+    - name: Start Flask application
+      shell: "flask run -h {{ app_host }} -p {{ app_port }} &"
+      args:
+        chdir: "{{ code_directory }}/app"
+
+  rescue:
+    - name: Delete code directory
+      file:
+        dest: "{{ code_directory }}"
+        state: absent

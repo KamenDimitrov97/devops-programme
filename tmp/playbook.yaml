@@ -1,0 +1,13 @@
+- hosts: localhost
+  gather_facts: false
+  become: false
+
+  vars:
+    app_host: "0.0.0.0"
+    app_port: "5001"
+
+  roles:
+    - role: roles/app
+      vars:
+        repo_name: "KamenDimitrov97/devops-programme.git"
+        branch_name: "test_branch"
