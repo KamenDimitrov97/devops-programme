@@ -21,8 +21,12 @@ RUN pip install -r requirements.txt
 
 COPY app /app
 
-EXPOSE 5000
+ARG host=0.0.0.0
+ARG port=3000
+
+ENV HOST=$host
+ENV PORT=$port
 
 USER app:app
 
-ENTRYPOINT [ "python3", "app.py" ]
+CMD flask run --host ${HOST} --port ${PORT}
