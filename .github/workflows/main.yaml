@@ -33,6 +33,13 @@ jobs:
       - run: npm i -g cli-markdown
       - run: md README.md
 
+      - uses: actions/setup-python@v4
+        with:
+            python-version: '3.10' 
+      - run: pip install -r requirements.txt
+      - run: python -m unittest discover -s app/ -p '*_test.py'
+
+        
       - name: Check editorconfig compliance
         uses: editorconfig-checker/action-editorconfig-checker@main
       - run: editorconfig-checker
