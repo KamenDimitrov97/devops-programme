@@ -11,9 +11,13 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
-      - name: Check editorconfig compliance
-        uses: editorconfig-checker/action-editorconfig-checker@main
-      - run: editorconfig-checker
+      - name: Lint
+        uses: gabriel-milan/action-pylint@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.DEVOPS_TOKEN }} # GitHub token
+          path: "./*.py" # Glob pattern for files to lint
+          fail: true # Fail the action if pylint errors are found
+          pr-message: true # Send a PR message if pylint errors are found
 
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
@@ -21,3 +25,7 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+
+      - name: Check editorconfig compliance
+        uses: editorconfig-checker/action-editorconfig-checker@main
+      - run: editorconfig-checker
