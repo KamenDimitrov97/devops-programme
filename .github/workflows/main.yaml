@@ -28,7 +28,10 @@ jobs:
             # extra-isort-options: ""
       
       - uses: actions/setup-node@v4
-
+        with:
+          node-version: 18
+      - run: npm i -g cli-markdown
+      - run: md README.md
 
       - name: Check editorconfig compliance
         uses: editorconfig-checker/action-editorconfig-checker@main
