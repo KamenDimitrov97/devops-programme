@@ -23,6 +23,9 @@ jobs:
       - run: npm i -g cli-markdown
       - run: md README.md
 
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEVOPS_TOKEN }}
 
       - uses: ricardochaves/python-lint@v1.4.0
         with:
