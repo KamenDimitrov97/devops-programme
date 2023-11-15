@@ -32,6 +32,12 @@ jobs:
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: 
+            -Dsonar.organization=kamendimitrov97
+            -Dsonar.projectKey=KamenDimitrov97_devops-programme
+            -Dsonar.verbose=true
+
 
       - uses: ricardochaves/python-lint@v1.4.0
         with:
